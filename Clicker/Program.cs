@@ -9,17 +9,20 @@ namespace Clicker
 {
     class Program
     {
-        private static Clicker clicker = new Clicker();
-
-        private static int clicksPerSecond = 1;
-        private static int msBetweenClicks = (int) 1000 / clicksPerSecond;
 
         private static System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
-        static void Main(string[] args)
+        static void Main()
         {
             Input.NotifyInputObservers += onInput;
             Input.Setup();
+
+            Thread.CurrentThread.Name = "original thread";
+
+            Clicker.clickThread.Name = "clickingThread";
+
+            Clicker.clickThread.Start();
+
 
             try
             { 
@@ -30,23 +33,8 @@ namespace Clicker
                 ManageException();
             }
 
-            MainLoop();
-
         }
         
-        private static void MainLoop()
-        {
-            while (true)
-            {
-                ClickIfEnabled();
-            }
-        }
-
-        private static void OnUpdate(object obj, EventArgs e)
-        {
-            Console.WriteLine("update");
-            ClickIfEnabled();
-        }
 
         private static void onInput(Keys k)
         {
@@ -54,19 +42,11 @@ namespace Clicker
             {
                 Console.WriteLine(k);
 
-                clicker.enabled = !clicker.enabled; //WORKS!
-                MainLoop();
+                Clicker.enabled = !Clicker.enabled; //WORKS!
             }
         }
 
-        private static void ClickIfEnabled()
-        {
-            while (clicker.enabled)
-            {
-                clicker.DoMouseClick();
-                Thread.Sleep(msBetweenClicks);
-            }
-        }
+
 
         private static void ManageException()
         {
