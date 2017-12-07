@@ -14,29 +14,18 @@ namespace Clicker
 
         static void Main()
         {
-            Input.NotifyInputObservers += onInput;
-            Input.Setup();
-
-            Thread.CurrentThread.Name = "original thread";
-
-            Clicker.clickThread.Name = "clickingThread";
+            CheckForProcesses();
 
             Clicker.clickThread.Start();
 
-
-            try
-            { 
-                CheckForProcesses();
-            }
-            catch (Exception)
-            {
-                ManageException();
-            }
-
+            Input.NotifyInputObservers += OnInput;
+            Input.Setup();
+            Application.Run();
+            Input.UnHook();
         }
         
 
-        private static void onInput(Keys k)
+        private static void OnInput(Keys k)
         {
             if (k == Keys.F9)
             {
@@ -48,18 +37,18 @@ namespace Clicker
 
 
 
-        private static void ManageException()
-        {
-            DialogResult dRes = MessageBox.Show("Something went wrong with the CommandMe app, do you want to restart it?", "CommandMe Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-            if (dRes == DialogResult.Yes)
-            {
-                RestartApp();
-            }
-            else if (dRes == DialogResult.No)
-            {
-                Application.Exit();
-            }
-        }
+        //private static void ManageException()
+        //{
+        //    DialogResult dRes = MessageBox.Show("Something went wrong with the CommandMe app, do you want to restart it?", "CommandMe Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+        //    if (dRes == DialogResult.Yes)
+        //    {
+        //        RestartApp();
+        //    }
+        //    else if (dRes == DialogResult.No)
+        //    {
+        //        Application.Exit();
+        //    }
+        //}
 
         private static void RestartApp()
         {

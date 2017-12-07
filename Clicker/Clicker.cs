@@ -22,15 +22,14 @@ namespace Clicker
         private static int msBetweenClicks = (int)1000 / clicksPerSecond;
 
         public static Thread clickThread = new Thread(new ThreadStart(SimulateMouseClick));
-        
+
         private static void SimulateMouseClick()
         {
             while (true)
             {
-                Console.WriteLine("test");
                 if (!enabled)
                 {
-                    Thread.Sleep(500);
+                    Thread.Sleep(50);
                 }
                 else
                 {

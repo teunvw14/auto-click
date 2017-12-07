@@ -32,8 +32,6 @@ namespace Clicker
             try
             {
                 _hookID = SetHook(_proc);
-                Application.Run();
-                UnhookWindowsHookEx(_hookID);
             }
             catch (Exception)
             {
@@ -41,6 +39,10 @@ namespace Clicker
             }
         }
 
+        public static void UnHook()
+        {
+            UnhookWindowsHookEx(_hookID);
+        }
 
         private static Keys keyTyped;
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
