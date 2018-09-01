@@ -11,7 +11,7 @@ namespace auto_clicker
         {
             var consoleWindow = GetConsoleWindow();
 
-            //ShowWindow(consoleWindow, SW_HIDE);
+            ShowWindow(consoleWindow, SW_HIDE);
 
             CheckForProcesses();
 
